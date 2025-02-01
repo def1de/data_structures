@@ -1,18 +1,23 @@
-pub struct Stack {
+use std::fmt::Display;
+
+pub struct Stack<T> {
     top: isize,
-    stack: Vec<isize>,
+    stack: Vec<T>,
     max_size: isize
 }
 
 #[allow(dead_code)]
-pub trait StackTrait {
+pub trait StackTrait<T> {
     fn new(size: usize) -> Self;
-    fn push(&mut self, item: isize) -> Option<()>;
-    fn pop(&mut self) -> Option<isize>;
+    fn push(&mut self, item: T) -> Option<()>;
+    fn pop(&mut self) -> Option<T>;
     fn print_stack(&mut self);
 }
 
-impl StackTrait for Stack {
+impl<T> StackTrait<T> for Stack<T>
+where
+    T: Copy + Display,
+{
     fn new(size: usize) -> Self {
         Stack {
             top: -1,
@@ -21,7 +26,7 @@ impl StackTrait for Stack {
         }
     }
 
-    fn push(&mut self, item: isize) -> Option<()> {
+    fn push(&mut self, item: T) -> Option<()> {
         if self.top >= self.max_size{
             return None
         }
@@ -34,7 +39,7 @@ impl StackTrait for Stack {
         return Some(())
     }
 
-    fn pop(&mut self) -> Option<isize> {
+    fn pop(&mut self) -> Option<T> {
         if self.top == -1 {
             return None
         }

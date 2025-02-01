@@ -1,19 +1,24 @@
-pub struct Queue {
+use std::fmt::Display;
+
+pub struct Queue<T> {
     front: usize,
     rear: usize,
-    queue: Vec<isize>,
+    queue: Vec<T>,
     max_size: usize
 }
 
 #[allow(dead_code)]
-pub trait QueueTrait {
+pub trait QueueTrait<T> {
     fn new(size: usize) -> Self;
-    fn enquue(&mut self, item: isize) -> Option<()>;
-    fn dequeue(&mut self) -> Option<isize>;
+    fn enquue(&mut self, item: T) -> Option<()>;
+    fn dequeue(&mut self) -> Option<T>;
     fn print_queue(&mut self);
 }
 
-impl QueueTrait for Queue {
+impl<T> QueueTrait<T> for Queue<T>
+where
+    T: Copy + Display,
+{
     fn new(size: usize) -> Self {
         Queue {
             front: 0,
@@ -23,7 +28,7 @@ impl QueueTrait for Queue {
         }
     }
 
-    fn enquue(&mut self, item: isize) -> Option<()> {
+    fn enquue(&mut self, item: T) -> Option<()> {
         let next_rear = (self.rear + 1) % self.max_size;
         if next_rear == self.front {
             println!("Queue is full!");
@@ -38,7 +43,7 @@ impl QueueTrait for Queue {
         return Some(());
     }
 
-    fn dequeue(&mut self) -> Option<isize> {
+    fn dequeue(&mut self) -> Option<T> {
         if self.front == self.rear {
             println!("Queue is empty!");
             return None
