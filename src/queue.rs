@@ -12,12 +12,15 @@ pub trait QueueTrait<T> {
     fn new(size: usize) -> Self;
     fn enquue(&mut self, item: T) -> Option<()>;
     fn dequeue(&mut self) -> Option<T>;
+}
+
+#[allow(dead_code)]
+pub trait PrintQueue<T> {
     fn print_queue(&mut self);
 }
 
 impl<T> QueueTrait<T> for Queue<T>
-where
-    T: Copy + Display,
+where T: Copy,
 {
     fn new(size: usize) -> Self {
         Queue {
@@ -52,8 +55,12 @@ where
         self.front = (self.front+1)%self.max_size;
         return Some(item);
     }
+}
 
-    fn print_queue(&mut self) {
+impl<T> PrintQueue<T> for Queue<T>
+where T: Display,
+{
+        fn print_queue(&mut self) {
         println!("Queue length {}", self.queue.len());
         for i in 0..self.queue.len() {
             print!("| {} ", self.queue[i])

@@ -1,7 +1,7 @@
 mod stack;
 mod queue;
-use stack::{Stack, StackTrait};
-use queue::{Queue, QueueTrait};
+use stack::{Stack, StackTrait, PrintStack};
+use queue::{Queue, QueueTrait, PrintQueue};
 use std::fmt;
 
 #[derive(Copy, Clone)]

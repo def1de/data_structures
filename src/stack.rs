@@ -11,6 +11,9 @@ pub trait StackTrait<T> {
     fn new(size: usize) -> Self;
     fn push(&mut self, item: T) -> Option<()>;
     fn pop(&mut self) -> Option<T>;
+}
+
+pub trait PrintStack<T>{
     fn print_stack(&mut self);
 }
 
@@ -47,7 +50,11 @@ where
         self.top-=1;
         return Some(return_value);
     }
+}
 
+impl<T> PrintStack<T> for Stack<T>
+where T: Display,
+{
     fn print_stack(&mut self) {
         println!("\n");
         for i in (0..=self.top).rev(){
